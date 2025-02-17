@@ -5,16 +5,16 @@
 // 5. Status (enum: “To Do”, “In Progress”, “Done”).
 
 
-import { anyone } from '@/access/access'
+import { anyone, userOnlyAccess } from '@/access/access'
 import type { CollectionConfig } from 'payload'
 
 export const Tasks: CollectionConfig = {
   slug: 'tasks',
   access: {
-    read: anyone,
+    read: userOnlyAccess(),
     create: anyone,
-    update: anyone,
-    delete: anyone,
+    update: userOnlyAccess(),
+    delete: userOnlyAccess(),
   },
   fields: [
     {
