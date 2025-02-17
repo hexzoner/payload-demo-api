@@ -44,11 +44,11 @@ export const Tasks: CollectionConfig = {
       options: [
         {
           label: 'To Do',
-          value: 'to-do',
+          value: 'toDo',
         },
         {
           label: 'In Progress',
-          value: 'in-progress',
+          value: 'inProgress',
         },
         {
           label: 'Done',
@@ -58,5 +58,4 @@ export const Tasks: CollectionConfig = {
       required: true,
     },
   ],
-  upload: true,
 }
