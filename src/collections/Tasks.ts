@@ -1,18 +1,18 @@
-// 1. Title 
-// 2. Description (rich text, optional).
-// 3. Due Date 
-// 4. Assignee (relation to users).
-// 5. Status (enum: “To Do”, “In Progress”, “Done”).
-
-
-import { userLogged } from '@/access/access'
+import { userLogged, userTasksAccess } from '@/access/access'
 import type { CollectionConfig } from 'payload'
 
+import type { CollectionAfterOperationHook, CollectionBeforeOperationHook } from 'payload'
+
+const beforeOperationHook: CollectionBeforeOperationHook = async ({ args, operation, req }) => {
+  if (operation === 'create')
+    args.data.createdBy = req.user?.id;
+  return args
+}
 
 export const Tasks: CollectionConfig = {
   slug: 'tasks',
   access: {
-    read: userLogged,
+    read: userTasksAccess,
     create: userLogged,
     update: userLogged,
     delete: userLogged,
@@ -57,5 +57,16 @@ export const Tasks: CollectionConfig = {
       ],
       required: true,
     },
+    {
+      name: 'createdBy',
+      type: 'relationship',
+      relationTo: 'users',
+    }
   ],
+  hooks:
+  {
+    beforeOperation: [beforeOperationHook]
+    // afterOperation: [afterOperationHook]
+  }
 }
+

@@ -156,6 +156,7 @@ export interface Task {
   dueDate: string;
   assignee: number | User;
   status: 'toDo' | 'inProgress' | 'done';
+  createdBy?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
 }
@@ -244,6 +245,7 @@ export interface TasksSelect<T extends boolean = true> {
   dueDate?: T;
   assignee?: T;
   status?: T;
+  createdBy?: T;
   updatedAt?: T;
   createdAt?: T;
 }

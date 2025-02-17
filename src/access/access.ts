@@ -1,5 +1,5 @@
 // import { User } from '@/payload-types';
-import { Access, AccessResult } from 'payload';
+import { Access, Where } from 'payload';
 
 export const anyone = () => true;
 
@@ -22,3 +22,25 @@ export const userLogged: Access = ({ req: { user } }) => {
     if (user) return true;
     return false;
 }
+
+export const userTasksAccess: Access = ({ req: { user } }) => {
+    if (!user) return false;
+    if (user.roles.includes('admin')) return true;
+
+    const query: Where = {
+        or: [
+            {
+                assignee: {
+                    equals: user.id,
+                },
+            },
+            {
+                createdBy: {
+                    equals: user.id,
+                },
+            },
+        ],
+    }
+    return query
+};
+
