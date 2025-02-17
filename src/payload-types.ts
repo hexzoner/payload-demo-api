@@ -117,6 +117,10 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
+  firstName?: string | null;
+  lastName?: string | null;
+  password: string | null;
+  roles: ('user' | 'admin')[];
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -126,7 +130,6 @@ export interface User {
   hash?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
-  password?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -134,7 +137,25 @@ export interface User {
  */
 export interface Task {
   id: number;
-  alt: string;
+  title: string;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  dueDate: string;
+  assignee: number | User;
+  status: 'to-do' | 'in-progress' | 'done';
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -209,6 +230,10 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  firstName?: T;
+  lastName?: T;
+  password?: T;
+  roles?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -224,7 +249,11 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "tasks_select".
  */
 export interface TasksSelect<T extends boolean = true> {
-  alt?: T;
+  title?: T;
+  description?: T;
+  dueDate?: T;
+  assignee?: T;
+  status?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

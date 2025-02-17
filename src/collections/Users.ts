@@ -1,4 +1,3 @@
-//Users and authentication
 // Users collection should be able to authenticate via JWT (which is built in Payload).
 // Two user roles: admins and regular users, 
 // in which admin can access all tasks and users can access only their own ones, 
@@ -7,12 +6,21 @@
 
 import type { CollectionConfig } from 'payload'
 
+import { adminOnly, anyone } from '../access/access'
+
+
 export const Users: CollectionConfig = {
   slug: 'users',
   admin: {
     useAsTitle: 'email',
   },
   auth: true,
+  access: {
+    read: anyone,
+    create: anyone,
+    update: anyone,
+    delete: adminOnly(),
+  },
   fields: [
     {
       name: 'firstName',

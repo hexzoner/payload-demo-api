@@ -1,5 +1,3 @@
-//Tasks
-//The task collection should have the following fields.
 // 1. Title 
 // 2. Description (rich text, optional).
 // 3. Due Date 
@@ -7,12 +5,16 @@
 // 5. Status (enum: “To Do”, “In Progress”, “Done”).
 
 
+import { anyone } from '@/access/access'
 import type { CollectionConfig } from 'payload'
 
 export const Tasks: CollectionConfig = {
   slug: 'tasks',
   access: {
-    read: () => true,
+    read: anyone,
+    create: anyone,
+    update: anyone,
+    delete: anyone,
   },
   fields: [
     {
