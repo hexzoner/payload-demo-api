@@ -32,10 +32,10 @@ export const anyone = () => true;
 
 
 
-export const userOnly: Access = ({ req: { user } }) => {
+export const userAccess: Access = ({ req: { user } }) => {
     if (!user || !user.roles) return false;
     if (user.roles.includes('admin')) return true
-    // By returning a Query, users can only access their own tasks
+    // users can only access their own data
     if (user.roles.includes('user')) {
         return {
             user: {
