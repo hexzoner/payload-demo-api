@@ -19,7 +19,7 @@ export const Users: CollectionConfig = {
     read: anyone,
     create: anyone,
     update: anyone,
-    delete: adminOnly(),
+    delete: adminOnly,
   },
   fields: [
     {
@@ -33,11 +33,6 @@ export const Users: CollectionConfig = {
     {
       name: 'email',
       type: 'email',
-      required: true,
-    },
-    {
-      name: 'password',
-      type: 'text',
       required: true,
     },
     {

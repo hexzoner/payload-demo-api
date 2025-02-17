@@ -119,7 +119,6 @@ export interface User {
   id: number;
   firstName?: string | null;
   lastName?: string | null;
-  password: string | null;
   roles: ('user' | 'admin')[];
   updatedAt: string;
   createdAt: string;
@@ -130,6 +129,7 @@ export interface User {
   hash?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
+  password?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -232,7 +232,6 @@ export interface PayloadMigration {
 export interface UsersSelect<T extends boolean = true> {
   firstName?: T;
   lastName?: T;
-  password?: T;
   roles?: T;
   updatedAt?: T;
   createdAt?: T;
