@@ -14,7 +14,9 @@ export const Users: CollectionConfig = {
   admin: {
     useAsTitle: 'email',
   },
-  auth: true,
+  auth: {
+    tokenExpiration: 3600 * 24,
+  },
   access: {
     read: anyone,
     create: anyone,
@@ -25,6 +27,7 @@ export const Users: CollectionConfig = {
     {
       name: 'firstName',
       type: 'text',
+
     },
     {
       name: 'lastName',
@@ -34,6 +37,7 @@ export const Users: CollectionConfig = {
       name: 'email',
       type: 'email',
       required: true,
+      validate: (value: any) => Boolean(value) || 'The email address is required!'
     },
     {
       name: 'roles',
@@ -41,6 +45,7 @@ export const Users: CollectionConfig = {
       hasMany: true,
       required: true,
       defaultValue: ['user'],
+      saveToJWT: true,
       options: [
         {
           label: 'User',
