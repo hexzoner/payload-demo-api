@@ -1,9 +1,9 @@
-// import { User } from '@/payload-types';
+import { User, Task } from '@/payload-types';
 import { Access, Where } from 'payload';
 
 export const anyone = () => true;
 
-export const userAccess: Access = ({ req: { user }, id, data }) => {
+export const userCollectionAccess: Access = ({ req: { user }, id, data }) => {
     // console.log('----user----', user);
     // console.log('----data----', data);
     // console.log('----id----', id);
@@ -18,12 +18,12 @@ export const adminOnly: Access = ({ req: { user } }) => {
     return false;
 }
 
-export const userLogged: Access = ({ req: { user } }) => {
+export const userAuthenticated: Access = ({ req: { user } }) => {
     if (user) return true;
     return false;
 }
 
-export const userTasksAccess: Access = ({ req: { user } }) => {
+export const tasksCollectionAccess: Access = ({ req: { user } }) => {
     if (!user) return false;
     if (user.roles.includes('admin')) return true;
 
@@ -44,3 +44,21 @@ export const userTasksAccess: Access = ({ req: { user } }) => {
     return query
 };
 
+
+export const editAccess: Access = async ({ req, id }) => {
+
+    const user = req.user;
+    if (!user || !id) return false;
+    if (user.roles && user.roles.some((role) => role === 'admin')) return true
+
+    // const task = await req.payload.find({
+    //     collection: 'tasks',
+    //     where: {
+    //         id: {
+    //             equals: id,
+    //         },
+    //     },
+    // });
+
+    return true;
+}
